@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MedicoService {
@@ -33,7 +34,7 @@ public class MedicoService {
         }
 
         if (dados.id() == null) {
-            Long id = usuarioService.salvarUsuario(dados.nome(), dados.email(), dados.crm(), Perfil.MEDICO);
+            Long id = usuarioService.salvarUsuario(dados.nome(), dados.email(), Perfil.MEDICO);
             repository.save(new Medico(id, dados));
         } else {
             var medico = repository.findById(dados.id()).orElseThrow();
@@ -55,5 +56,6 @@ public class MedicoService {
     public List<DadosListagemMedico> listarPorEspecialidade(Especialidade especialidade) {
         return repository.findByEspecialidade(especialidade).stream().map(DadosListagemMedico::new).toList();
     }
+
 
 }
